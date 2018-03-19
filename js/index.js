@@ -69,6 +69,9 @@ function getEarthquakesFromBounds(north,south,east,west){
                     type : "FeatureCollection"
                  })
                
+            },
+            error: function(error){
+                alert(error)
             }
     });
 
@@ -137,12 +140,18 @@ $(document).ready(function(){
         $("#pageContentSearch").css('display','block')
         
     });
+    $("#submit").submit(function(){
+        $("#topEarthquakesContent").css('display','none')
+        $("#pageContentSearch").css('display','block')
+        
+    });
     $("#topMenuButton").on("click", function(){
         $("#pageContentSearch").css('display','none')
         $("#topEarthquakesContent").css('display','block')
         getAllEarthQuakesOlderThanDate(new Date(),[],function(earthquakes){
             var sortedEarthquakes = earthquakes.sort(sortOnMagnitude)
             var topTenEarthquakes = sortedEarthquakes.slice(0,10)
+            $("#contentTable").empty()
             for (var i in topTenEarthquakes){
                 insertEarthquakeToTable(topTenEarthquakes[i])
             }
